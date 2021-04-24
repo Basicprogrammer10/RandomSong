@@ -7,14 +7,14 @@ import random
 import json
 
 ############ VARS ############
-wordFile = 'data/words.json'
-songFile = 'data/song.txt'
-outFile  = 'data/out.txt'
+wordFile = 'data/words.json'   # Synonym Data
+songFile = 'data/song.txt'     # Song to read
+outFile = 'data/out.txt'       # New Song Output
 
-RandomIndex = True
+RandomIndex = True             # Use random Synonyms (True, Any Number)
 
-DEBUG = True
-COLOR = True
+DEBUG = True                   # Show Program ourputs
+COLOR = True                   # Disable Ansi Code Color
 
 ColorCodes = {'black': '30', 'red': '31', 'yellow': '33', 'green': '32', 'blue': '34',
               'cyan': '36', 'magenta': '35', 'white': '37', 'gray': '90', 'reset': '0'}
@@ -23,16 +23,19 @@ ColorCodes = {'black': '30', 'red': '31', 'yellow': '33', 'green': '32', 'blue':
 
 
 def colored(text, color):
-    if not COLOR: return text
+    if not COLOR:
+        return text
     return '\033[' + ColorCodes[str(color).lower()] + 'm' + str(text) + "\033[0m"
 
 
 def DebugPrint(Category, Text, Color):
-    if not DEBUG: return
+    if not DEBUG:
+        return
     print(colored('['+datetime.now().strftime("%H:%M:%S")+'] ', 'yellow') +
           colored('['+Category+'] ', 'magenta')+colored(Text, Color))
 
 
+# Load and Parse Synonym Data
 def loadWordData(file):
     DebugPrint('WordFile', 'Loading File', 'cyan')
     try:
@@ -51,6 +54,7 @@ def loadWordData(file):
     return jsonLoaded
 
 
+# Get Synonym for a word
 def getWordForWord(data, word, RandomIndex):
     words = data[word]
     index = random.randint(0, len(words)-1)
@@ -58,6 +62,7 @@ def getWordForWord(data, word, RandomIndex):
     return rng
 
 
+# Replace words in text with synonyms
 def forEachInSong(songFile, wordData, RandomIndex):
     DebugPrint('SongFile', 'Loading File', 'cyan')
     try:
@@ -79,6 +84,7 @@ def forEachInSong(songFile, wordData, RandomIndex):
     return working
 
 
+# Save new song to a file
 def saveNewSong(outFile, data):
     DebugPrint(
         'Output', f'Saveing File {colored("["+outFile+"]", "blue")}', 'cyan')

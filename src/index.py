@@ -9,7 +9,7 @@ import json
 ############ VARS ############
 wordFile = 'data/words.json'
 songFile = 'data/song.txt'
-outFile = 'data/out.txt'
+outFile  = 'data/out.txt'
 
 RandomIndex = True
 
@@ -23,14 +23,12 @@ ColorCodes = {'black': '30', 'red': '31', 'yellow': '33', 'green': '32', 'blue':
 
 
 def colored(text, color):
-    if not COLOR:
-        return text
+    if not COLOR: return text
     return '\033[' + ColorCodes[str(color).lower()] + 'm' + str(text) + "\033[0m"
 
 
 def DebugPrint(Category, Text, Color):
-    if not DEBUG:
-        return
+    if not DEBUG: return
     print(colored('['+datetime.now().strftime("%H:%M:%S")+'] ', 'yellow') +
           colored('['+Category+'] ', 'magenta')+colored(Text, Color))
 
@@ -96,7 +94,6 @@ def main():
     data = loadWordData(wordFile)
     newSong = forEachInSong(songFile, data, RandomIndex)
     saveNewSong(outFile, newSong)
-    #print(getWordForWord(data, 'happy'))
 
 
 if __name__ == "__main__":
